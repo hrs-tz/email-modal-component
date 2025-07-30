@@ -1,11 +1,17 @@
 <template>
     <div>
         <label for="recipient">Recipients</label>
-        <div v-if="recipientsError" class="error">({{ recipientsError }})</div>
-        <div v-if="error" class="error">{{ error }}</div>
+        <transition name="error">
+            <div v-if="recipientsError" class="text-error">({{ recipientsError }})</div>
+        </transition>
+        <transition name="error">
+            <div v-if="error" class="text-error">{{ error }}</div>
+        </transition>
         <input 
             @keyup="addToRecipientsOnKeyUp" 
             @change="addToRecipientsOnChange"
+            :class="{ 'wobble': shouldWobble, 'error': erroredField }"
+            @animationend="setShouldWobble(false)"
             v-model="tempRecipient" 
             list="recipients" 
             id="recipient" 
@@ -39,7 +45,7 @@ import { ref, watch } from 'vue';
 import debounce from 'debounce'
 
 export default {
-    props: ['recipients', 'setRecipients', 'recipientsError'],
+    props: ['recipients', 'setRecipients', 'recipientsError', 'setRecipientsError', 'shouldWobble', 'setShouldWobble', 'erroredField', 'setErroredField'],
     setup(props) {
         const filteredClients = ref([])
         const tempRecipient = ref('')
@@ -50,6 +56,8 @@ export default {
         // load()
 
         watch(tempRecipient, () => {
+            props.setRecipientsError(false)
+            props.setErroredField(false)
             loadClients(tempRecipient.value)
             
         })
@@ -90,6 +98,8 @@ export default {
         }
 
         const addAllRecipients = async() => {
+            props.setRecipientsError(false)
+            props.setErroredField(false)
             loading.value = true
             await load()
             loading.value = false
@@ -163,8 +173,35 @@ export default {
         animation: spin 2s linear infinite;
         }
 
+    /* Transitions & Animations */
     @keyframes spin {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
+    }
+
+    @keyframes wobble {
+        0% { transform: translateX(0px) }
+        50% { transform: translateX(-10px); }
+        60% { transform: translateX(8px);}
+        70% { transform: translateX(-8px);}
+        80% { transform: translateX(4px);}
+        90% { transform: translateX(-4px);}
+        100% { transform: translateX(0); }
+    }
+
+    @keyframes flash {
+        0% { opacity: 0; }
+        50% { opacity: 1; }
+        60% { opacity: 0.5;}
+        70% { opacity: 1;}
+        80% { opacity: 1;}
+        90% { opacity: 0.5;}
+        100% { opacity: 1; }
+    }
+    .error-enter-active {
+        animation: flash 0.5s ease;
+    }
+    .wobble {
+        animation: wobble 0.5s ease;
     }
 </style>

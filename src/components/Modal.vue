@@ -7,13 +7,24 @@
                 :recipients="recipients"
                 :setRecipients="val => recipients = val"
                 :recipientsError="recipientsError"
+                :setRecipientsError="val => recipientsError = val"
+                :shouldWobble="shouldWobble"
+                :setShouldWobble="val => shouldWobble = val"
+                :erroredField="erroredField"
+                :setErroredField="val => erroredField = val"
             />
             <div>
                 <label for="subject">Subject</label>
+                <transition name="error">
+                    <div v-if="subjectError" class="text-error">({{ subjectError }})</div>
+                </transition>
                 <input v-model="subject" id="subject" name="subject" type="text" placeholder="Email subject" required>
             </div>
             <div>
                 <label for="body">Body</label>
+                <transition name="error">
+                    <div v-if="bodyError" class="text-error">({{ bodyError }})</div>
+                </transition>
                 <textarea v-model="body" name="body" id="body" placeholder="Body of text" minlength="10" required></textarea>
             </div>  
             <div class="actions">
@@ -42,6 +53,8 @@ export default {
         const recipientsError = ref('')
         const subjectError = ref('')
         const bodyError = ref('')
+        const shouldWobble = ref(false)
+        const erroredField = ref(false)
 
         const closeModal = () => {
             emit('close')
@@ -50,6 +63,8 @@ export default {
         const submit = () => {
             if (recipients.value.length === 0) {
                 recipientsError.value = 'At least one recipient is required'
+                shouldWobble.value = true
+                erroredField.value = true
                 return
             }
             console.log('recipients:' + recipients.value + '\nsubject:' + subject.value + '\nbody:' + body.value)
@@ -57,7 +72,7 @@ export default {
             closeModal()
         }
 
-        return { recipients, subject, body, recipientsError, closeModal, submit }
+        return { recipients, subject, body, recipientsError, subjectError, bodyError, shouldWobble, erroredField, closeModal, submit }
     }
 }
 </script>
@@ -122,11 +137,14 @@ button.secondary {
     background-color: white;
     border: solid 1px #2c3e50;
 }
-.error {
+.text-error {
     display: inline;
     color: crimson;
     margin-left: 10px;
     font-weight: 600;
     letter-spacing: 0.5px;
+}
+.error {
+    border-color: crimson;
 }
 </style>

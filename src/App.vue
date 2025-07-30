@@ -12,9 +12,9 @@
     />
     </teleport>
 
-    <div v-if="showAlert">
-      <Toast>Message sent successfully</Toast>
-    </div>
+    <transition name="toast">
+      <Toast v-if="showAlert">Message sent successfully</Toast>
+    </transition>
     
     <h1>Welcome to the Email Tool</h1>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, sunt distinctio enim veniam in id explicabo deserunt ipsum dignissimos nemo quasi soluta, repellendus, velit minima aliquam aspernatur accusamus! Mollitia minus corporis neque odit modi nisi fuga quasi dolorum architecto eius consectetur non consequuntur nostrum, molestias eos facere, dicta libero odio.</p>
@@ -83,6 +83,19 @@ nav {
 
 nav>a {
   margin: 0 20px 0 0;
+  letter-spacing: 0.5px;
 }
 
+/* Transitions */
+.toast-enter-from {
+  transform: translateX(60px);
+  opacity: 0;
+}
+.toast-enter-active, .toast-leave-active {
+  transition: all 0.3s ease;
+}
+.toast-leave-to {
+  transform: translateY(60px);
+  opacity: 0;
+}
 </style>
