@@ -2,10 +2,11 @@
   <div @click.self="closeModal" class="backdrop">
     <div class="modal">
         <h1>Send an email</h1>
-        <form @submit.prevent action="">
+        <form @submit.prevent="submit">
             <AutoComplete 
                 :recipients="recipients"
                 :setRecipients="val => recipients = val"
+                :recipientsError="recipientsError"
             />
             <div>
                 <label for="subject">Subject</label>
@@ -17,7 +18,7 @@
             </div>  
             <div class="actions">
                 <button type="button" @click="closeModal" class="secondary">Cancel</button>
-                <button type="button" @click="submit" class="primary">Submit</button>
+                <button type="submit" class="primary">Submit</button>
             </div>
         </form>
 
@@ -38,17 +39,25 @@ export default {
         const recipients = ref([])
         const subject = ref('')
         const body = ref('')
+        const recipientsError = ref('')
+        const subjectError = ref('')
+        const bodyError = ref('')
 
         const closeModal = () => {
             emit('close')
         }
 
         const submit = () => {
+            if (recipients.value.length === 0) {
+                recipientsError.value = 'At least one recipient is required'
+                return
+            }
             console.log('recipients:' + recipients.value + '\nsubject:' + subject.value + '\nbody:' + body.value)
+            emit('success')
             closeModal()
         }
 
-        return { recipients, subject, body, closeModal, submit }
+        return { recipients, subject, body, recipientsError, closeModal, submit }
     }
 }
 </script>
@@ -113,5 +122,11 @@ button.secondary {
     background-color: white;
     border: solid 1px #2c3e50;
 }
-
+.error {
+    display: inline;
+    color: crimson;
+    margin-left: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
 </style>

@@ -1,6 +1,8 @@
 <template>
     <div>
         <label for="recipient">Recipients</label>
+        <div v-if="recipientsError" class="error">({{ recipientsError }})</div>
+        <div v-if="error" class="error">{{ error }}</div>
         <input 
             @keyup="addToRecipientsOnKeyUp" 
             @change="addToRecipientsOnChange"
@@ -15,9 +17,7 @@
             <option v-for="filteredClient in filteredClients" :key="filteredClient.id" :value=filteredClient.email />
         </datalist>
     </div>
-
-    <div v-if="error">{{ error }}</div>
-
+    
     <div class="recipients-list">
         <div v-if="loading" class="loader-container">
             <div class="loader"></div>
@@ -39,7 +39,7 @@ import { ref, watch } from 'vue';
 import debounce from 'debounce'
 
 export default {
-    props: ['recipients', 'setRecipients'],
+    props: ['recipients', 'setRecipients', 'recipientsError'],
     setup(props) {
         const filteredClients = ref([])
         const tempRecipient = ref('')
