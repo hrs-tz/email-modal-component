@@ -89,8 +89,7 @@ export default {
     align-items: center;
 }
 .modal {
-    width: 80%;
-    height: 70%;
+    width: 1000px;
     padding: 60px;
     background: white;
     border-radius: 10px;
@@ -102,7 +101,7 @@ form>div {
 input, textarea {
     display: block;
     padding: 10px;
-    border: solid 1px #2c3e50;
+    border: solid 1px rgb(44, 62, 80, 0.4);
     border-radius: 10px;
     width: 100%;
     font-size: medium;
@@ -119,23 +118,6 @@ label {
 .actions {
     display: flex;
     justify-content: end;
-}
-button {
-    padding: 10px 35px;
-    margin-left: 15px;
-    border: none;
-    border-radius: 10px;
-    font-size: medium;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-}
-button.primary {
-    background-color: #EF9538;
-    color: white;
-}
-button.secondary {
-    background-color: white;
-    border: solid 1px #2c3e50;
 }
 .text-error {
     display: inline;

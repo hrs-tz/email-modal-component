@@ -86,6 +86,24 @@ nav>a {
   letter-spacing: 0.5px;
 }
 
+button {
+    padding: 10px 35px;
+    margin-left: 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: medium;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+button.primary {
+    background-color: #EF9538;
+    color: white;
+}
+button.secondary {
+    background-color: white;
+    border: solid 1px #2c3e50;
+}
+
 /* Transitions */
 .toast-enter-from {
   transform: translateX(60px);

@@ -16,7 +16,7 @@ export default {
         bottom: 20px;
         right: 20px;
         padding: 20px 50px;
-        background-color: rgb(82, 176, 82);
+        background-color: rgba(27, 135, 27, 0.5);
         color: white;
         box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
         border-radius: 10px;
