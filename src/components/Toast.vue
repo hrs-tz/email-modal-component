@@ -5,8 +5,14 @@
 </template>
 
 <script>
-export default {
+import { onMounted } from 'vue'
 
+export default {
+  setup(props, { emit }) {
+    onMounted( () => {
+      setTimeout(() => emit('close'), 4000)
+    })
+  }
 }
 </script>
 
