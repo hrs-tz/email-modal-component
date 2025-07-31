@@ -19,7 +19,7 @@ This is a reusable Vue.js component featuring a modal form that allows users to 
 - Native form validation
 
 ## ✅ Notes
-- Recipient suggestions are fetched via simulated API (in loadRecipients)
+- Recipient suggestions are fetched via simulated API
 - You can trigger the modal by clicking on "Contact" in the navbar
 - The Toast disappears automatically after 4 seconds
 
