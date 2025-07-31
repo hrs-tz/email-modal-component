@@ -27,7 +27,7 @@ This is a reusable Vue.js component featuring a modal form that allows users to 
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-username/email-modal-component.git
+git clone https://github.com/hrs-tz/email-modal-component.git
 
 # 2. Navigate into the project directory
 cd email-modal-component
